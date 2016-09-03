@@ -27,20 +27,16 @@ var MarketProductCard = React.createClass({
   },
   customerProductOpen(){
     var customerProductUrl = this.props.model.productOpenUrl;
-    console.log("customerProductUrl: " + customerProductUrl);
     var accessToken = window.sessionStorage.getItem("x-cbc-accessToken");
     var tenantCode = window.sessionStorage.getItem("tenantCode");
     var standardProductId = this.props.model.id;
-    console.log("accessToken: " + accessToken + ", tenantCode: " + tenantCode + ", standardProductId: " + standardProductId);
     window.open(customerProductUrl+"?params="+accessToken+","+tenantCode+","+standardProductId);
   },
   openDetail(){
     var customerProductDetailUrl = this.props.model.productDetailUrl;
-    console.log("customerProductDetailUrl: " + customerProductDetailUrl);
     var accessToken = window.sessionStorage.getItem("x-cbc-accessToken");
     var tenantCode = window.sessionStorage.getItem("tenantCode");
     var productInstId = this.props.model.id;
-    console.log("accessToken: " + accessToken + ", tenantCode: " + tenantCode + ", productInstId: " + productInstId);
     window.open(customerProductDetailUrl+"?params="+accessToken+","+tenantCode+","+productInstId);
   },
   render() {
