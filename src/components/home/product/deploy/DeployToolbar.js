@@ -316,6 +316,10 @@ var DeployToolbar = React.createClass({
     this.progressTimer = setTimeout(this.queryProgressRate.bind(this, data.get("instanceId")), 5000);
     this.logTimer = setTimeout(this.queryBuildLogs.bind(this, data.get("instanceId")), 5000)
   },
+  componentWillUnmount() {
+    clearTimeout(this.progressTimer);
+    clearTimeout(this.logTimer);
+  },
   renderBtnGroup() {
     var props = this.props;
     var type = props.type;
