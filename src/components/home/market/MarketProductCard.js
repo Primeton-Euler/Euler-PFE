@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Image } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { i18n , Notify} from 'euler-ui'
+import { browserHistory} from 'react-router'
 import ModalBox from '../../commons/ModalBox'
 
 var MarketProductCard = React.createClass({
@@ -38,6 +39,19 @@ var MarketProductCard = React.createClass({
     var tenantCode = window.sessionStorage.getItem("tenantCode");
     var productInstId = this.props.model.id;
     window.open(customerProductDetailUrl+"?params="+accessToken+","+tenantCode+","+productInstId);
+  },
+  sureToDelete(productInstanceId,userName){
+    this.props.actions.deleteProductInstance(productInstanceId, userName);
+    browserHistory.replace("/home/market/2");
+  },
+  handleDelete() {
+    var productInstanceId = this.props.model.id;
+    var userName = JSON.parse(sessionStorage.getItem("userInfo")).userName;
+    ModalBox.createConfirm({
+      title: i18n.get("common.delete"),
+      text: i18n.get("market.confirmDelete"),
+      confirmFn:this.sureToDelete.bind(this, productInstanceId, userName)
+    });
   },
   render() {
     var props = this.props;
@@ -80,7 +94,10 @@ var MarketProductCard = React.createClass({
         }
       } else if (2 == model.statusId || 5 == model.statusId) {
         button = (
-          <Button bsStyle="warning" disabled>{i18n.get("market.fail")}</Button>
+          <div>
+            <Button bsStyle="warning" disabled>{i18n.get("market.fail")}</Button>
+            <Button bsStyle="danger" className="market-btn-delete" onClick={ this.handleDelete } active>{i18n.get("market.purchasedProduct.delete")}</Button>
+          </div>
         );
       } else {
         button = (
