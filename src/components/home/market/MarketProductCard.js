@@ -73,7 +73,8 @@ var MarketProductCard = React.createClass({
             <Button active>{i18n.get("market.choose")}</Button>
           </LinkContainer>);
       }
-      if (5 == viewTag) {
+      //if (5 == viewTag) {
+      if (this.props.model.productOpenUrl) {
         btnView = (<Button active onClick={this.customerProductOpen}>{i18n.get("market.choose")}</Button>);
       }
 
