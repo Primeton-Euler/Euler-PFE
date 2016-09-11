@@ -40,6 +40,13 @@ var MarketProductCard = React.createClass({
     var productInstId = this.props.model.id;
     window.open(customerProductDetailUrl+"?params="+accessToken+","+tenantCode+","+productInstId);
   },
+  customerProductDelete() {
+    var productDestroyUrl = this.props.model.productDestroyUrl;
+    var accessToken = window.sessionStorage.getItem("x-cbc-accessToken");
+    var tenantCode = window.sessionStorage.getItem("tenantCode");
+    var productInstId = this.props.model.id;
+    window.open(productDestroyUrl+"?params="+accessToken+","+tenantCode+","+productInstId);
+  },
   sureToDelete(productInstanceId,userName){
     this.props.actions.deleteProductInstance(productInstanceId, userName);
     browserHistory.replace("/home/market/2");
@@ -74,7 +81,7 @@ var MarketProductCard = React.createClass({
           </LinkContainer>);
       }
       //if (5 == viewTag) {
-      if (this.props.model.productOpenUrl) {
+      if (this.props.model.productOpenUrl) {// 不判断类型是否为自定义产品，只判断开通url是否存在
         btnView = (<Button active onClick={this.customerProductOpen}>{i18n.get("market.choose")}</Button>);
       }
 
@@ -84,10 +91,25 @@ var MarketProductCard = React.createClass({
       // statusId  1  正在创建  2  创建失败  3 创建成功  4 停止  5 删除失败
       if (3 == model.statusId) {
         //自定义产品
-        if (5 == viewTag) {
-          button = (
-            <Button bsStyle="success" onClick={this.openDetail}>{i18n.get("market.chosen")}</Button>
-          );
+        //if (5 == viewTag) {
+        var detailButton = "";
+        var destroyButton = "";
+        if (this.props.model.productDetailUrl || this.props.model.productDestroyUrl) {// 判断自定义产品的详情url是否存在
+          if (this.props.model.productDetailUrl) {
+            detailButton = (
+                <Button bsStyle="success" onClick={this.openDetail}>{i18n.get("market.chosen")}</Button>
+            );
+          } else {
+            detailButton = (<LinkContainer to={ { pathname: `/home/market/purchasedProduct/${model.id}` } }>
+              <Button bsStyle="success">{i18n.get("market.chosen")}</Button>
+            </LinkContainer>);
+          }
+          if (this.props.model.productDestroyUrl) {
+            destroyButton = (
+                <Button bsStyle="danger" className="market-btn-delete" onClick={ this.customerProductDelete } active>{i18n.get("market.purchasedProduct.delete")}</Button>
+            );
+          }
+          button = (<div>{detailButton}, {destroyButton}</div>);
         } else {
           button = (<LinkContainer to={ { pathname: `/home/market/purchasedProduct/${model.id}` } }>
             <Button bsStyle="success">{i18n.get("market.chosen")}</Button>
