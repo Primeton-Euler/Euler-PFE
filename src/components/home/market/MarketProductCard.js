@@ -34,14 +34,14 @@ var MarketProductCard = React.createClass({
     window.open(customerProductUrl+"?params="+accessToken+","+tenantCode+","+standardProductId);
   },
   openDetail(){
-    var customerProductDetailUrl = this.props.model.productDetailUrl;
+    var customerProductDetailUrl = this.props.model.extend3;
     var accessToken = window.sessionStorage.getItem("x-cbc-accessToken");
     var tenantCode = window.sessionStorage.getItem("tenantCode");
     var productInstId = this.props.model.id;
     window.open(customerProductDetailUrl+"?params="+accessToken+","+tenantCode+","+productInstId);
   },
   customerProductDelete() {
-    var productDestroyUrl = this.props.model.productDestroyUrl;
+    var productDestroyUrl = this.props.model.extend2;
     var accessToken = window.sessionStorage.getItem("x-cbc-accessToken");
     var tenantCode = window.sessionStorage.getItem("tenantCode");
     var productInstId = this.props.model.id;
@@ -107,7 +107,7 @@ var MarketProductCard = React.createClass({
           destroyButton = (
               <Button bsStyle="danger" className="market-btn-delete" onClick={ this.customerProductDelete } active>{i18n.get("market.purchasedProduct.delete")}</Button>
           );
-          button = (<div>{detailButton}, {destroyButton}</div>);
+          button = (<div>{detailButton} {destroyButton}</div>);
         } else {
           button = (<LinkContainer to={ { pathname: `/home/market/purchasedProduct/${model.id}` } }>
             <Button bsStyle="success">{i18n.get("market.chosen")}</Button>
