@@ -94,15 +94,15 @@ var MarketProductCard = React.createClass({
         //if (5 == viewTag) {
         var detailButton = "";
         var destroyButton = "";
-        if (this.props.model.releaseDesc === 'chidi_customization') {// 判断自定义产品的详版本描述是否为“chidi_customization”
+        if (this.props.model.releaseDesc === 'chidi_customization') {// 判断自定义产品的版本描述是否为“chidi_customization”
           // 产品实例详情，自定义链接
-          //detailButton = (
-          //    <Button bsStyle="success" onClick={this.openDetail}>{i18n.get("market.chosen")}</Button>
-          //);
+          detailButton = (
+              <Button bsStyle="success" onClick={this.openDetail}>{i18n.get("market.chosen")}</Button>
+          );
           // 产品实例详情，按照默认方式显示
-          detailButton = (<LinkContainer to={ { pathname: `/home/market/purchasedProduct/${model.id}` } }>
-            <Button bsStyle="success">{i18n.get("market.chosen")}</Button>
-          </LinkContainer>);
+          //detailButton = (<LinkContainer to={ { pathname: `/home/market/purchasedProduct/${model.id}` } }>
+          //  <Button bsStyle="success">{i18n.get("market.chosen")}</Button>
+          //</LinkContainer>);
           // 删除产品实例，自定义链接
           destroyButton = (
               <Button bsStyle="danger" className="market-btn-delete" onClick={ this.customerProductDelete } active>{i18n.get("market.purchasedProduct.delete")}</Button>
